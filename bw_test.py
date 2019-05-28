@@ -1,6 +1,5 @@
 import numpy as np
 import cv2 as cv
-#from matplotlib import pyplot as plt
 from picamera import PiCamera
 
 
@@ -87,13 +86,14 @@ def puntillismo(img):
 
 
 def transform():
-    #camera = PiCamera()
-    #camera.start_preview()
-    #sleep(5)
-    #camera.capture('/home/pi/Desktop/LENO.jpg')
-    #camera.stop_preview()
+    camera = PiCamera()
+    camera.start_preview()
+    sleep(5)
+    camera.capture('/home/pi/Desktop/LENO.jpg')
+    camera.stop_preview()
     
-    image = cv.imread('lena.jpeg')
+    #image = cv.imread('lena.jpeg')
+    image = cv.imread('LENO.jpg')
     gray = cv.cvtColor(image, cv.COLOR_BGR2GRAY)
 
     cv.imshow('Original image',image)
