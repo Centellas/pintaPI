@@ -1,8 +1,5 @@
 import RPi.GPIO as GPIO
 import time
-#import cv2
-#from matplotlib import pyplot as plt
-#plt.rcParams['image.cmap']='gray'
 
 def up_down_pen():
     GPIO.setmode(GPIO.BCM)
@@ -61,30 +58,3 @@ def moure_eix_secundari(direccio):
     time.sleep(microPausa)
     GPIO.cleanup()
 
-
-
-"""
-
-img = [[255,0,255,0,255,0],[0,255,0,255,0,255],[255,0,255,0,255,0],[255,0,255,0,255,0],[0,255,0,255,0,255],[255,0,255,0,255,0]]
-for i in range(6):
-    for j in range(6):
-        if img[i][j] != 255:
-        up_down_pen()
-        print ("llapis")
-            moure_eix_secundari(0)
-            print ("moure eix secundari")
-        else:
-            moure_eix_secundari(0)
-            print ("moure eix secundari")
-    print ("moure al inici eix secundari")
-    for j in range(5):
-        moure_eix_secundari(1)
-    moure_eix_principal(1)
-    print ("moure eix principal")
-print ("moure al inici eix principal")
-for j in range(5):
-    moure_eix_principal(0)
-
-print ("finish")
-
-"""
