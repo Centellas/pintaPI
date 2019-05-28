@@ -5,7 +5,7 @@ from picamera import PiCamera
 
 
 
-def selectroifromcorners(xs):
+def selectroifromcorners(xs): ## get best corners a partir de la roi
 
     goodvalues =[]
     sorted1 = np.sort(xs, axis = 0)
@@ -20,9 +20,9 @@ def selectroifromcorners(xs):
     return x1,y1,x2,y2
 
 
-def findroi(img):
+def findroi(img): ### dibuixa roi i crida a detection corners. (shi tomasi!!!)
 
-    corners = cv.goodFeaturesToTrack(img,25,0.01,10)
+    corners = cv.goodFeaturesToTrack(img,25,0.01,10) ## call to shi tomasi to find 25 best corners
     corners = np.int0(corners)
     x1,y1,x2,y2= selectroifromcorners(corners)
     img = cv.rectangle(img,(x1,y1),(x2,y2),(0,255,0),2)
@@ -32,13 +32,13 @@ def findroi(img):
 
     return img
 
-def colorquantization(img):
+def colorquantization(img): # color cuantization, redueix la imatge a 4 colors
 
     height, width = img.shape[:2]   
     print (width)
-    print (height)
-
-    for i in range(width):
+    print (height)  
+    ## traduir a 4 colors tots els pixels
+    for i in range(width): 
         for j in range(height):
             tmp = img[j][i]
             tmp = (tmp // 64) * 85 
@@ -47,7 +47,7 @@ def colorquantization(img):
     return img
 
 
-def esborde(i,j, img):
+def esborde(i,j, img): # determina si un pixel es borde mirant els veïns
     tmp = img[j][i]
     try:
         if (tmp != img[j-1][i] or tmp != img[j][i-1] or tmp != img[j+1][i] or tmp != img[j][i+1]):
@@ -59,7 +59,7 @@ def esborde(i,j, img):
 
 
 
-def puntillismo(img):
+def puntillismo(img): ## generacio de puntillismo, si es borde, pinta de color negre. si no, pinta blanc
 
     #
     #   input       output
@@ -77,37 +77,37 @@ def puntillismo(img):
 
             tmp = img[j][i]
 
-            if esborde(i, j,imorg):
+            if esborde(i, j,imorg): ## pintar si es borde de color negre
                 img[j][i] = 0
             else:
-                img[j][i] = 255
+                img[j][i] = 255 ## pintar blanc si no es borde
     return img
                     
 
 
 
-def transform():
+def transform(): ## funcio main principal, amb tots els canvis de color necesaris
     #camera = PiCamera()
     #camera.start_preview()
     #sleep(5)
     #camera.capture('/home/pi/Desktop/LENO.jpg')
     #camera.stop_preview()
     
-    image = cv.imread('lena.jpeg')
-    gray = cv.cvtColor(image, cv.COLOR_BGR2GRAY)
+    image = cv.imread('lena.jpeg') ## llegeix una imatge si no es fa servir la picam
+    gray = cv.cvtColor(image, cv.COLOR_BGR2GRAY) # conversio a escala de grisos
 
     cv.imshow('Original image',image)
 
-    roi = findroi(gray)
+    roi = findroi(gray) # detecta roi
 
     cv.imshow('Roi', roi)
 
-    gray_cuantized=colorquantization(roi) # Cuantitzacio de colors
+    gray_cuantized=colorquantization(roi) # Cuantitzacio de colors 
 
-    cv.imshow('Roi Quantized', gray_cuantized)
+    cv.imshow('Roi Quantized', gray_cuantized) 
 
 
-    puntimg = puntillismo(gray_cuantized)
+    puntimg = puntillismo(gray_cuantized) ## pasa cuantitzacio a puntillisme
     cv.imshow('puntillismo', puntimg)
     #fichero = open('lena.txt', 'w')
     #fichero.write(str(puntimg.shape[:2] ))
@@ -121,5 +121,5 @@ def transform():
     print(puntimg)
     cv.waitKey(0)
     cv.destroyAllWindows()
-    return puntimg
+    return puntimg ## retorna
 
