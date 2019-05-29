@@ -1,10 +1,7 @@
 import RPi.GPIO as GPIO
 import time
-#import cv2
-#from matplotlib import pyplot as plt
-#plt.rcParams['image.cmap']='gray'
 
-def up_down_pen():
+def up_down_pen():   # Programa per moure el servo uns 90º i tornar a la posicio anterior
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(17, GPIO.OUT)
 
@@ -19,9 +16,9 @@ def up_down_pen():
     p.stop()
     GPIO.cleanup()
 
-def moure_eix_principal(direccio):
+def moure_eix_principal(direccio): # Programa per moure el eix principal
     GPIO.setmode(GPIO.BOARD)
-
+    #Conexio pins, numero pasos i pauses entre pasos
     pinDir = 36
     pinStep = 32
     numStep = 5
@@ -40,7 +37,7 @@ def moure_eix_principal(direccio):
     time.sleep(microPausa)
     GPIO.cleanup()
 
-def moure_eix_secundari(direccio):
+def moure_eix_secundari(direccio): # Programa per moure el eix secundari
     GPIO.setmode(GPIO.BOARD)
 
     pinDir2 = 37
@@ -61,30 +58,3 @@ def moure_eix_secundari(direccio):
     time.sleep(microPausa)
     GPIO.cleanup()
 
-
-
-"""
-
-img = [[255,0,255,0,255,0],[0,255,0,255,0,255],[255,0,255,0,255,0],[255,0,255,0,255,0],[0,255,0,255,0,255],[255,0,255,0,255,0]]
-for i in range(6):
-    for j in range(6):
-        if img[i][j] != 255:
-        up_down_pen()
-        print ("llapis")
-            moure_eix_secundari(0)
-            print ("moure eix secundari")
-        else:
-            moure_eix_secundari(0)
-            print ("moure eix secundari")
-    print ("moure al inici eix secundari")
-    for j in range(5):
-        moure_eix_secundari(1)
-    moure_eix_principal(1)
-    print ("moure eix principal")
-print ("moure al inici eix principal")
-for j in range(5):
-    moure_eix_principal(0)
-
-print ("finish")
-
-"""
